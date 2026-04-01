@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BHP — Babec Hair Products</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --blue:    #0071c5;
+      --blue-lt: #1a8fe3;
+      --teal:    #00b4c8;
+      --teal-lt: #e0f7fa;
+      --rack:    #1565c0;
+      --bg:      #f0f4f8;
+      --bg2:     #ffffff;
+      --bg3:     #e8edf2;
+      --border:  #ccd6e0;
+      --text:    #1a2a38;
+      --dim:     #6b8299;
+      --green:   #00897b;
+      --amber:   #f59e0b;
+      --red:     #e53935;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── HERO: two-column split ─── */
+    .hero {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* LEFT — all text/UI elements */
+    .hero-left {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+    }
+
+    /* RIGHT — video only, at 50% page width = zoomed out 50% */
+    .hero-right {
+      width: 50%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: auto;       /* let the video keep its natural aspect ratio */
+      display: block;
+      max-height: 100vh;  /* never taller than the viewport */
+    }
+
+    /* ─── NAV (inside hero-left) ─── */
+    nav {
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      gap: 0;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+
+    .nav-brand {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--blue);
+      letter-spacing: .1em;
+      padding: .9rem 1.5rem .9rem 0;
+      border-right: 1px solid var(--border);
+      margin-right: 1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    nav a {
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      padding: .9rem 1rem;
+      letter-spacing: .04em;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: var(--blue); }
+    nav a.active { color: var(--blue); border-bottom: 2px solid var(--blue); }
+
+    /* ─── BRAND LOCKUP ─── */
+    .brand-lockup {
+      padding: 2rem 2.5rem 0;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .brand-lockup .word {
+      display: block;
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      color: var(--text);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .brand-lockup .word:nth-child(1) { margin-left: 0; }
+    .brand-lockup .word:nth-child(2) { margin-left: clamp(1.2rem, 3vw, 2.5rem); }
+    .brand-lockup .word:nth-child(3) { margin-left: clamp(2.4rem, 6vw, 5rem); }
+
+    /* ─── HERO INTRO (inside hero-left, grows to fill) ─── */
+    .hero-intro {
+      flex: 1;
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .22em;
+      color: var(--blue);
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.15;
+      letter-spacing: .03em;
+    }
+
+    .hero-title span { color: var(--blue); }
+
+    .hero-sub {
+      font-size: .95rem;
+      color: var(--dim);
+      line-height: 1.65;
+      max-width: 440px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-size: .85rem;
+      font-weight: 600;
+      padding: .75rem 1.8rem;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: background .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover { background: var(--blue-lt); box-shadow: 0 4px 16px rgba(0,113,197,.35); }
+
+    .btn-outline {
+      font-size: .85rem;
+      font-weight: 600;
+      padding: .75rem 1.8rem;
+      background: transparent;
+      color: var(--blue);
+      border: 1.5px solid var(--blue);
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: all .2s;
+      text-decoration: none;
+    }
+
+    .btn-outline:hover { background: var(--blue); color: #fff; }
+
+    /* ─── STATUS BAR (bottom of hero-left) ─── */
+    .status-bar {
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: .4rem 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .58rem;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: .08em;
+      overflow-x: auto;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+
+    .led { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; animation: blink 1.6s infinite; flex-shrink: 0; }
+    .led.green  { background: #4caf50; box-shadow: 0 0 5px #4caf50; }
+    .led.amber  { background: #ffb300; box-shadow: 0 0 5px #ffb300; animation-delay: .6s; }
+    .led.red    { background: #ff5252; box-shadow: 0 0 5px #ff5252; animation-delay: 1s; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    .status-bar .spacer { margin-left: auto; }
+
+    @media (max-width: 800px) {
+      .hero { flex-direction: column; min-height: auto; }
+      .hero-left, .hero-right { width: 100%; }
+      .hero-right { min-height: 55vw; }
+    }
+
+    .btn-outline:hover { background: var(--blue); color: #fff; }
+
+    /* ─── TICKER ─── */
+    .ticker-wrap {
+      position: relative;
+      z-index: 10;
+      background: var(--blue);
+      padding: .45rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker {
+      display: inline-block;
+      animation: ticker 35s linear infinite;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .68rem;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: .1em;
+    }
+
+    @keyframes ticker { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+    /* ─── MAIN ─── */
+    main { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: .5rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: .04em;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* ─── PRODUCT GRID ─── */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,113,197,.12);
+      border-color: var(--teal);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-badge {
+      position: absolute;
+      top: .7rem; right: .7rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .08em;
+      padding: .22rem .6rem;
+      border-radius: 20px;
+      z-index: 10;
+      font-weight: bold;
+    }
+
+    .badge-new   { background: var(--green); color: #fff; }
+    .badge-combo { background: var(--amber); color: #fff; }
+    .badge-water { background: var(--teal);  color: #fff; }
+    .badge-empty { background: var(--red);   color: #fff; }
+
+    /* ─── PRODUCT IMAGE ─── */
+    .card-img {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #e8f4fb 0%, #ddeef7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* subtle dot grid */
+    .card-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,113,197,.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .card-img svg { position: relative; z-index: 1; }
+
+    .card-img img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ─── CARD BODY ─── */
+    .card-body { padding: 1.3rem; flex: 1; display: flex; flex-direction: column; }
+
+    .card-sku {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .58rem;
+      color: var(--dim);
+      letter-spacing: .15em;
+      margin-bottom: .5rem;
+    }
+
+    .card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: .04em;
+      margin-bottom: .7rem;
+    }
+
+    .card-desc {
+      font-size: .88rem;
+      color: var(--text);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-spec {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .6rem;
+      color: var(--dim);
+      margin-top: .9rem;
+      padding-top: .9rem;
+      border-top: 1px solid var(--border);
+      line-height: 1.9;
+    }
+
+    .card-spec .val-ok  { color: var(--green); }
+    .card-spec .val-warn{ color: var(--amber); }
+    .card-spec .val-err { color: var(--red);   }
+
+    /* ─── CARD FOOTER ─── */
+    .card-footer {
+      padding: 1rem 1.3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafcff;
+    }
+
+    .price {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .price span {
+      font-size: .6rem;
+      color: var(--dim);
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      letter-spacing: .05em;
+      margin-top: .1rem;
+    }
+
+    .btn-deploy {
+      font-size: .78rem;
+      font-weight: 600;
+      padding: .55rem 1.1rem;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: background .2s;
+    }
+
+    .btn-deploy:hover { background: var(--blue-lt); }
+
+    /* ─── TOAST ─── */
+    #toast {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      background: var(--bg2);
+      border: 1px solid var(--teal);
+      border-left: 4px solid var(--teal);
+      padding: .9rem 1.4rem;
+      font-size: .78rem;
+      color: var(--text);
+      border-radius: 4px;
+      transform: translateY(120%);
+      transition: transform .3s;
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(0,113,197,.15);
+    }
+
+    #toast.show { transform: translateY(0); }
+
+    /* ─── ABOUT STRIP ─── */
+    .about-strip {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .about-cell {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+      transition: box-shadow .2s;
+    }
+
+    .about-cell:hover { box-shadow: 0 4px 16px rgba(0,113,197,.1); }
+
+    .about-cell .icon { font-size: 1.8rem; margin-bottom: .6rem; }
+    .about-cell h4 {
+      font-family: 'Orbitron', monospace;
+      font-size: .65rem;
+      color: var(--blue);
+      letter-spacing: .1em;
+      margin-bottom: .4rem;
+    }
+    .about-cell p { font-size: .82rem; color: var(--dim); line-height: 1.5; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      margin-top: 4rem;
+      background: var(--text);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .62rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: .08em;
+      line-height: 2;
+    }
+
+    footer .uptime { color: #4caf50; }
+
+    /* ─── CART BUTTON ─── */
+    .cart-btn {
+      position: fixed;
+      top: 1rem; right: 1rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .5rem .9rem;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      z-index: 900;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      transition: border-color .2s;
+    }
+
+    .cart-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .cart-count { color: var(--blue); font-weight: 700; }
+
+    @media (max-width: 600px) {
+      .products { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CART BUTTON -->
+<div class="cart-btn" onclick="openCart()">
+  🛒 Cart [<span class="cart-count" id="cartCount">0</span>]
+</div>
+
+<!-- ─── HERO: left text | right video ─── -->
+<div class="hero">
+
+  <!-- LEFT: nav + intro + status bar -->
+  <div class="hero-left">
+    <nav>
+      <div class="nav-brand">BHP</div>
+      <a href="#" class="active">Products</a>
+      <a href="#">Solutions</a>
+      <a href="#">Support</a>
+      <a href="#">Docs</a>
+      <a href="#">Hair Status</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <div class="brand-lockup">
+      <span class="word">BABEC</span>
+      <span class="word">HAIR</span>
+      <span class="word">PRODUCTS</span>
+    </div>
+
+    <div class="hero-intro">
+      <div class="hero-eyebrow">// BABEC HAIR PRODUCTS — ENTERPRISE EDITION</div>
+      <div class="hero-title">
+        High-Performance<br><span>Hair Solutions.</span><br>Zero Hair Required.
+      </div>
+      <div class="hero-sub">
+        Industrial-grade hair care engineered for the modern scalp — from our datacenter to your dome.
+        Trusted by 0 dermatologists. Used by thousands of bald people who didn't read the label.
+      </div>
+      <div class="hero-cta">
+        <a href="#products" class="btn-primary">Browse Products</a>
+        <a href="#" class="btn-outline">Request a Demo</a>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <span><span class="led green"></span>RACK-01 ONLINE</span>
+      <span><span class="led green"></span>RACK-02 ONLINE</span>
+      <span><span class="led amber"></span>HAIR_DETECTED: FALSE</span>
+      <span><span class="led red"></span>BALD_ALERT: CRITICAL</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: video at 50% page width — full frame visible -->
+  <div class="hero-right">
+    <video class="hero-video" src="Hair_Product_Model_In_a_dramatic_style_a_man_with_long_wavy_brown_2LrS05K6.mp4" autoplay muted loop playsinline></video>
+  </div>
+
+</div>
+
+<!-- ─── TICKER (full width, below hero) ─── -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    &nbsp;&nbsp;&nbsp;
+    ✦ BHP STOCK UP 420% — ANALYSTS ATTRIBUTE THIS TO GLOBAL BALDNESS EPIDEMIC &nbsp;&nbsp;&nbsp;
+    ✦ HAIR_COUNT = 0 — PROCEEDING WITH PURCHASE &nbsp;&nbsp;&nbsp;
+    ✦ NEW: BALD HEAD 5G ANTENNA REFLECTOR WAX NOW SHIPPING &nbsp;&nbsp;&nbsp;
+    ✦ APRIL 1ST SPECIAL: EVERYTHING IS EQUALLY USELESS ALL YEAR ROUND &nbsp;&nbsp;&nbsp;
+    ✦ SCIENTISTS CONFIRM: BALD HEADS ARE 12% MORE AERODYNAMIC &nbsp;&nbsp;&nbsp;
+    ✦ BHP WINS "MOST INNOVATIVE EMPTY BOX" AWARD FOR 3RD CONSECUTIVE YEAR &nbsp;&nbsp;&nbsp;
+    ✦ WARNING: USING OUR HAIR DYE MAY RESULT IN A SLIGHTLY WET BALD HEAD &nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<main id="products">
+  <div class="section-label">// PRODUCT CATALOGUE — SKU v2.0.26-BALD</div>
+  <div class="section-title">Available Products</div>
+
+  <div class="products">
+
+    <!-- ─── PRODUCT 1: BALD MAN'S COMB ─── -->
+    <div class="card">
+      <span class="card-badge badge-new">NEW</span>
+      <div class="card-img">
+        <img src="comb.jpg" alt="Bald Man's Comb" />
+      </div>
+      <div class="card-body">
+        <div class="card-sku">SKU-BHP-001 &nbsp;|&nbsp; HAIR_TOOLS &nbsp;|&nbsp; IN STOCK: 9,999 UNITS</div>
+        <div class="card-title">BALD MAN'S COMB</div>
+        <div class="card-desc">
+          The world's most aerodynamic comb. Our engineers spent 3 years meticulously removing
+          every unnecessary tooth, achieving a drag coefficient of absolute zero. Zero resistance,
+          zero maintenance, zero purpose. Also doubles as a back scratcher, a bookmark, or a
+          tiny surfboard for ants. Comes with a case to store it next to your hair.
+        </div>
+        <div class="card-spec">
+          > TEETH_COUNT .............. <span class="val-err">0</span><br>
+          > AERODYNAMICS ............. <span class="val-ok">MAXIMUM</span><br>
+          > HAIR_COMPATIBILITY ....... <span class="val-err">N/A</span><br>
+          > REGRET_FACTOR ............ <span class="val-warn">MEDIUM</span><br>
+          > REFUND_POLICY ............ <span class="val-err">LOL, NO</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="price">10.00 €<span>MSRP per unit</span></div>
+        <button class="btn-deploy" onclick="addToCart('Bald Man\'s Comb')">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- ─── PRODUCT 2: BALD HEAD WAX ─── -->
+    <div class="card">
+      <span class="card-badge badge-new">BESTSELLER</span>
+      <div class="card-img">
+        <img src="wax.png" alt="Bald Head Wax" />
+      </div>
+      <div class="card-body">
+        <div class="card-sku">SKU-BHP-002 &nbsp;|&nbsp; STYLING &nbsp;|&nbsp; IN STOCK: INFINITE</div>
+        <div class="card-title">BALD HEAD WAX</div>
+        <div class="card-desc">
+          Achieve that server-room level shine on your dome. Our proprietary polymer coating formula
+          makes your bald head as glossy as a freshly polished hard drive platter.
+          Reach up to 99.8% light reflectivity — perfect for blinding coworkers in video calls
+          and serving as an emergency disco ball at office parties. No hair needed, only ambition.
+        </div>
+        <div class="card-spec">
+          > SHINE_LEVEL .............. <span class="val-err">BLINDING</span><br>
+          > UV_PROTECTION ............ <span class="val-err">NONE</span><br>
+          > REFLECTIVITY ............. <span class="val-ok">99.8% (MIRROR MODE)</span><br>
+          > DISCO_BALL_MODE .......... <span class="val-ok">YES</span><br>
+          > SIDE_EFFECTS ............ <span class="val-warn">EXCESSIVE CONFIDENCE</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="price">5.00 €<span>MSRP per unit</span></div>
+        <button class="btn-deploy" onclick="addToCart('Bald Head Wax')">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- ─── PRODUCT 3: COMBO ─── -->
+    <div class="card">
+      <span class="card-badge badge-combo">BUNDLE</span>
+      <div class="card-img">
+        <img src="bundle.png" alt="Bald Man's Comb + Wax Bundle" />
+      </div>
+      <div class="card-body">
+        <div class="card-sku">SKU-BHP-003 &nbsp;|&nbsp; BUNDLE &nbsp;|&nbsp; IN STOCK: LIMITED (lol)</div>
+        <div class="card-title">COMB + WAX COMBO</div>
+        <div class="card-desc">
+          The ultimate bald head maintenance kit — because why waste money on one useless thing
+          when you can buy two? First, comb your bald head (feel the wind). Then wax it to a
+          mirror shine. You'll save a whole 2€ — roughly the price of the dignity you lost
+          buying them separately. Ships in premium cardboard more useful than the contents.
+        </div>
+        <div class="card-spec">
+          > ITEMS_INCLUDED ........... <span class="val-ok">2 (TWO)</span><br>
+          > VALUE_PROPOSITION ........ <span class="val-warn">QUESTIONABLE</span><br>
+          > SAVINGS .................. <span class="val-ok">2.00€ (≈ 1 espresso)</span><br>
+          > HAIR_REQUIRED ............ <span class="val-err">HARD NO</span><br>
+          > GIFT_APPROPRIATENESS ..... <span class="val-warn">DEPENDS ON VICTIM</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="price">13.00 €<span>Bundle price — save 2€</span></div>
+        <button class="btn-deploy" onclick="addToCart('Comb + Wax Combo')">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- ─── PRODUCT 4: HAIR DYE (water) ─── -->
+    <div class="card">
+      <span class="card-badge badge-water">H₂O</span>
+      <div class="card-img">
+        <img src="hair dye.png" alt="Bald Man's Hair Dye" />
+      </div>
+      <div class="card-body">
+        <div class="card-sku">SKU-BHP-004 &nbsp;|&nbsp; COLORANTS &nbsp;|&nbsp; IN STOCK: TAP IS OPEN</div>
+        <div class="card-title">BALD MAN'S HAIR DYE</div>
+        <div class="card-desc">
+          Our 100% transparent ultra-premium hair dye. Scientifically engineered to produce
+          zero color change — even on hair you don't have. The secret ingredient is our
+          proprietary dihydrogen monoxide compound, known internally as "Project Clear."
+          Available in shades: Invisible Blonde, Ghost Brunette, and See-Through Black.
+        </div>
+        <div class="card-spec">
+          > COLOR_CHANGE ............. <span class="val-err">NULL</span><br>
+          > INGREDIENTS .............. <span class="val-ok">H2O (100%)</span><br>
+          > PROCESSING_TIME .......... <span class="val-ok">INSTANT (it's water)</span><br>
+          > AVAILABLE_COLORS ......... <span class="val-warn">TRANSPARENT</span><br>
+          > WARNING .................. <span class="val-warn">MAY CAUSE DAMPNESS</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="price">POA<span>Price on request</span></div>
+        <button class="btn-deploy" onclick="addToCart('Bald Man\'s Hair Dye')">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- ─── PRODUCT 5: ANTI-DANDRUFF POWDER ─── -->
+    <div class="card">
+      <span class="card-badge badge-empty">0g ACTIVE</span>
+      <div class="card-img">
+        <img src="powder.png" alt="Anti-Dandruff Powder" />
+      </div>
+      <div class="card-body">
+        <div class="card-sku">SKU-BHP-005 &nbsp;|&nbsp; SCALP_CARE &nbsp;|&nbsp; IN STOCK: ∅</div>
+        <div class="card-title">ANTI-DANDRUFF POWDER</div>
+        <div class="card-desc">
+          Revolutionary null-formula for the bald scalp that has already achieved follicular
+          perfection. The box is completely empty — because no hair means no dandruff, which means
+          our product is 100% effective by definition. This is not a bug, it is a feature.
+          You're essentially purchasing the concept of cleanliness itself. A bargain.
+        </div>
+        <div class="card-spec">
+          > CONTENTS ................. <span class="val-err">0g (EMPTY)</span><br>
+          > ACTIVE_INGREDIENT ........ <span class="val-err">NULL</span><br>
+          > DANDRUFF_REDUCTION ....... <span class="val-ok">100% (no hair = 0 dandruff)</span><br>
+          > EFFECTIVENESS ............ <span class="val-ok">PARADOXICALLY PERFECT</span><br>
+          > CARBON_FOOTPRINT ......... <span class="val-ok">NEAR ZERO (just the box)</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="price">POA<span>Price on request</span></div>
+        <button class="btn-deploy" onclick="addToCart('Anti-Dandruff Powder')">Add to Cart</button>
+      </div>
+    </div>
+
+  </div><!-- /products -->
+
+  <!-- ─── ABOUT STRIP ─── -->
+  <div class="about-strip">
+    <div class="about-cell">
+      <div class="icon">⚡</div>
+      <h4>LOW LATENCY</h4>
+      <p>Our products ship with 0ms hair processing time. There is nothing to process.</p>
+    </div>
+    <div class="about-cell">
+      <div class="icon">🛡️</div>
+      <h4>99.97% UPTIME</h4>
+      <p>Your bald head is always available. No scheduled maintenance, ever.</p>
+    </div>
+    <div class="about-cell">
+      <div class="icon">📡</div>
+      <h4>5G COMPATIBLE</h4>
+      <p>A waxed bald head can serve as a passive antenna reflector. (Unverified.)</p>
+    </div>
+    <div class="about-cell">
+      <div class="icon">♻️</div>
+      <h4>SUSTAINABLE</h4>
+      <p>Our anti-dandruff powder box is filled with 100% recycled air.</p>
+    </div>
+    <div class="about-cell">
+      <div class="icon">🏆</div>
+      <h4>ISO CERTIFIED</h4>
+      <p>ISO 420-69: Certified for products that are technically products.</p>
+    </div>
+    <div class="about-cell">
+      <div class="icon">🔒</div>
+      <h4>ENTERPRISE GRADE</h4>
+      <p>Your purchase data is encrypted with the same rigor as our empty powder box.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div>BHP — BABEC HAIR PRODUCTS &copy; 2026 &nbsp;|&nbsp; ALL RIGHTS RESERVED (EXCEPT THE HAIR) &nbsp;|&nbsp; VAT INCLUDED WHERE APPLICABLE</div>
+  <div style="margin-top:.3rem;">RACK-01: ONLINE &nbsp;·&nbsp; RACK-02: ONLINE &nbsp;·&nbsp; YOUR HAIR: OFFLINE</div>
+  <div class="uptime" style="margin-top:.3rem;">
+    SYSTEM STATUS: ALL BALD HEADS NOMINAL &nbsp;·&nbsp; HAIR_DETECTED: 0 UNITS
+  </div>
+  <div style="margin-top:.6rem; color: rgba(255,255,255,0.2); font-size: .58rem;">
+    DISCLAIMER: This is an April Fools joke. BHP takes no responsibility for excessive bald head shining, emotional distress caused by toothless combs,
+    or the existential realisation that you purchased bottled water as hair dye.
+    Products do not treat, cure, or prevent anything, including baldness.
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast">Item added to cart</div>
+
+<script>
+  let cart = 0;
+
+  function addToCart(name) {
+    cart++;
+    document.getElementById('cartCount').textContent = cart;
+    const t = document.getElementById('toast');
+    t.textContent = `✓ "${name}" added to cart [${cart} item${cart > 1 ? 's' : ''}]`;
+    t.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  function openCart() {
+    if (cart === 0) {
+      alert('[BHP CART]\n\nYour cart is empty.\n\nMuch like your scalp.');
+    } else {
+      alert(`[BHP CART]\n\n${cart} item${cart > 1 ? 's' : ''} in cart.\n\nAll of them equally useless. We respect that.\n\n(Checkout is a work in progress — like your hair growth.)`);
+    }
+  }
+
+  // Smooth scroll for anchor link
+  document.querySelector('a[href="#products"]').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Live uptime counter in title
+  const start = Date.now();
+  setInterval(() => {
+    const s = Math.floor((Date.now() - start) / 1000);
+    const m = Math.floor(s / 60);
+    const h = Math.floor(m / 60);
+    document.title = `BHP — ${String(h).padStart(2,'0')}:${String(m % 60).padStart(2,'0')}:${String(s % 60).padStart(2,'0')} uptime`;
+  }, 1000);
+</script>
+</body>
+</html>

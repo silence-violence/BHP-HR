@@ -7,8 +7,24 @@
 
   const langOrder = ["uk", "ru", "hr"];
 
+  function readStoredLang() {
+    try {
+      return localStorage.getItem("pratsia_lang");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function writeStoredLang(lang) {
+    try {
+      localStorage.setItem("pratsia_lang", lang);
+    } catch (e) {
+      /* storage unavailable (private mode, sandboxed preview, etc.) — ignore */
+    }
+  }
+
   function detectDefaultLang() {
-    const saved = localStorage.getItem("pratsia_lang");
+    const saved = readStoredLang();
     if (saved && UI[saved]) return saved;
     const nav = (navigator.language || "hr").toLowerCase();
     if (nav.startsWith("uk")) return "uk";
@@ -24,7 +40,7 @@
 
   function setLang(lang) {
     currentLang = lang;
-    localStorage.setItem("pratsia_lang", lang);
+    writeStoredLang(lang);
     document.documentElement.lang = lang;
     renderStatic();
     renderCategories();
@@ -238,6 +254,7 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("year").textContent = new Date().getFullYear();
+    document.documentElement.lang = currentLang;
     setupLangSwitch();
     renderStatic();
     renderCategories();
